@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>doggo and donnoto</title>
+    <style>
+    </style>
+</head>
+
+<body>
+    <audio src="Media/dog_n_donuts/coin.flac" id="coin"></audio>
+    <div style="background-color: gold; width: 640px; ">
+        <canvas id="gameCanvas" width="640" height="480"></canvas>
+    </div>
+    <div style="display: none;">
+        <img id="fish" src="Media/dog_n_donuts/fishpact.png" alt="unloaded">
+        <img id="donut" src="Media/dog_n_donuts/dessertprev.png" alt="unloaded">
+
+    </div>
+    <script>
+
+        // const donutsheet = new Image();
+        // donutsheet.src = "Media/dog_n_donuts/dessertprev.png";
+
+        // const fishpact = new Image();
+        // fishpact.src = "Media/dog_n_donuts/fishpact.png";
+
+        var ctx = gameCanvas.getContext("2d");
+        var X = [100, 300, 500];
+        var Y = [0, 0, 0];
+        var speed = [2, 1, 3];
+        var fishX = 300;
+        var changeX = 0;
+        var score = 0;
+
+        var CANVAS_WIDTH = gameCanvas.width;
+        var CANVAS_HEIGHT = gameCanvas.height;
+        var timer = setInterval(gameloop, 20);
+
+        function gameloop() {
+            ctx.clearRect(0, 0, 640, 480);
+            ctx.font = "30px Arial";
+            ctx.fillText(`Score: ${score}`, 10, 30);
+
+            for (var n = 0; n < 3; n++) {
+                // ctx.drawImage(donut, X[n], Y[n], 80, 80);
+                drawsprite(donut,0,0,X[n],Y[n],250,250,CANVAS_WIDTH / 12,CANVAS_HEIGHT / 9)
+                Y[n] += speed[n]
+                hitCheck(n)
+                if (Y[n] > 480) {
+                    Y[n] = -80;
+                    X[n] = Math.random() * 600;
+                }
+            }
+            // ctx.drawImage(fish, fishX, 400, 80, 80);
+            drawsprite(fish,9,8,fishX,400,64,64,CANVAS_WIDTH / 12,CANVAS_HEIGHT / 9);
+            fishX += changeX;
+        }
+
+        document.onkeydown = keyPressed;
+        function keyPressed(event) {
+            var key = event.keyCode;
+            if (key == 37)changeX = -4;
+            if (key == 39)changeX = 4;
+
+        }
+
+        function hitCheck(n){
+            if ((Math.abs(400-Y[n]) < 60) && (Math.abs(fishX - X[n]) < 60)){
+                score += 1;
+                Y[n] = -80;
+                X[n] = Math.random() * 600;
+                coin.play();
+            }
+
+            setTimeout(gameOver,60000)
+            function gameOver(){
+                clearInterval(timer);
+                ctx.font = "30px Arial";
+                ctx.fillText(`game over, score: ${score}`,100,250);
+                
+
+
+            }
+
+        }
+
+        function drawsprite(spriteSheet,row, col, destX, destY, spriteWidth, spriteHeight, canvasWidth, canvasHeight) {
+            if (!spriteSheet.complete) {
+                spriteSheet.onload = () => drawsprite(row, col, destX, desY, spriteWidth, spriteHeight, canvasWidth, canvasHeight);
+                return;
+            }
+            const sx = col * spriteWidth;
+            const sy = row * spriteHeight;
+            const sw = spriteWidth;
+            const sh = spriteHeight;
+            const dx = destX;
+            const dy = destY;
+            const dw = canvasWidth;
+            const dh = canvasHeight;
+            ctx.drawImage(spriteSheet, sx, sy, sw, sh, dx, dy, dw, dh);
+        }
+    </script>
+</body>
+
+</html>

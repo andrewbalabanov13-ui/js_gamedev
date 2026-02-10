@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>astroid</title>
+    <style>
+        div {
+            width: 640px;
+            height: 480px;
+            background-image: url("https://cdn.mos.cms.futurecdn.net/mu3VH8Sib9nRMZYPEueNqS.jpg");
+            background-size: cover;
+        }
+
+        img {
+            display: block;
+        }
+
+        #rocketShip {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <canvas id="gameCanvas" width="640px" height="480px">
+        </canvas>
+    </div>
+    <img id="rocketShip"
+        src="https://static.vecteezy.com/system/resources/thumbnails/019/045/384/small/rocket-icon-simple-start-up-sign-and-symbol-png.png"
+        alt="ImageNotLoaded">
+    <img id="meteor" src="Media/6_meteor/meteorBrown_med3-removebg-preview.png">
+
+    <script>
+        var ctx = gameCanvas.getContext("2d");
+        var X = [600, 600, 600, 600, 600];
+        var Y = [0, 100, 200, 300, 400];
+        var meteorSpeed = [-1, -2, -0.5, -1.2, -1.8];
+        var rocketY = 200;
+        var changeY = 0;
+        var score = 0;
+
+        var gameTimer = setInterval(gameLoop, 20);
+
+        function gameLoop() {
+            moveMeteor();
+            moveRocket();
+
+        }
+
+        function moveMeteor() {
+            ctx.clearRect(0, 0, 640, 480);
+            for (var n = 0; n < 5; n++) {
+                ctx.drawImage(meteor, X[n], Y[n], 80, 80);
+                X[n] += meteorSpeed[n];
+                checkForHits(n);
+                if (X[n] < -80) {
+                    X[n] = 640;
+                    Y[n] = Math.random() * 400;
+
+                }
+            }
+
+        }
+        function rotateImage(image, amount_rotated,tx,ty,dx,dy,width,height){
+            ctx.save()
+            ctx.translate(tx,ty);
+            ctx.rotate(amount_rotated);
+            ctx.drawImage(image, dx,dy, width, height);
+            ctx.restore()
+                }
+                
+            function moveRocket() {
+            rotateImage(rocketShip,Math.PI / 2,40,rocketY + 40,-40,-40,80,80)
+            rocketY += changeY;
+            score++;
+            ctx.fillStyle = "yellow";
+            ctx.font = "30px Arial";
+            ctx.fillText("score: " + score, 10, 30);
+            if ((rocketY < 0) || (rocketY > 400)) {
+                changeY = 0;
+            }
+
+        }
+
+        function checkForHits(n) {
+            if ((Math.abs(X[n]) < 50) && (Math.abs(rocketY - Y[n]) < 50)) {
+                clearInterval(gameTimer);
+                ctx.font = "50px Arial";
+                ctx.fillText("Game Over, score: " + score, 100,250);
+
+
+
+
+            }
+
+
+
+        }
+        document.onkeydown = keypressed;
+
+        function keypressed(e) {
+            ekey = e.keyCode
+            if (ekey == 38) changeY = -3;
+            if (ekey == 40) changeY = 3;
+
+
+
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>

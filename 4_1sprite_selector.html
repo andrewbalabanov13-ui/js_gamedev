@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>sprite selector</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="dessertCanvas" width="600" height="600"></canvas>
+    <!-- <img src="Media/dog_n_donuts/fishpact.png"> -->
+    <script>
+      const canvas = document.getElementById("dessertCanvas");
+      const ctx = canvas.getContext("2d");
+      const CANVAS_WIDTH = canvas.width;
+      const CANVAS_HEIGHT = canvas.height;
+
+      const spriteSheet = new Image();
+      spriteSheet.src = "Media/dog_n_donuts/fishpact.png";
+
+      const SPRITE_WIDHT = 64; //250
+      const SPRITE_HEIGHT = 64; //270
+
+      function drawsprite(row, col, destX, destY,spriteWidth,spriteHeight,canvasWidth,canvasHeight){
+        if (!spriteSheet.complete) {
+          spriteSheet.onload = () => drawsprite(row, col, destX, desY,spriteWidth,spriteHeight,canvasWidth,canvasHeight);
+          return;
+        }
+
+        const sx = col * spriteWidth;
+        const sy = row * spriteHeight;
+        const sw = spriteWidth;
+        const sh = spriteHeight;
+        const dx = destX;
+        const dy = destY;
+        const dw = canvasWidth;
+        const dh = canvasHeight;
+
+        // ctx.drawImage(spriteSheet,sx, sy);// image and position (of width and height of image)
+        // ctx.drawImage(spriteSheet,sx, sy, sw,sh);// image and position specfied width
+        //[sx,sy,sw,sh] = orignal area cut out from sprite sheet
+        //[dx,dy,dw,dh] = where on canvas to place cut image to
+        // ctx.drawImage(spriteSheet,sx, sy, sw,sh,dx,dy,dw,dh);
+        ctx.drawImage(spriteSheet, sx, sy, sw, sh, dx, dy, dw, dh);
+      }
+
+      spriteSheet.onload = () => {
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        drawsprite(9, 8, 0, 0,64,64,600,600);
+      };
+    </script>
+  </body>
+</html>

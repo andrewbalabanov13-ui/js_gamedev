@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Catch thin</title>
+    <style></style>
+  </head>
+  <body>
+    <div style="background-color: rgb(76, 139, 118); width: 640px">
+      <canvas id="gameCanvas" width="640" height="480"></canvas>
+    </div>
+    <div style="display: block">
+      <img
+        id="apple"
+        style="height: 100px;display:none"
+        src="Media/3_catch it stuff/pngtree-green-apple-fruit-png-image_4048443-removebg-preview.png"
+        alt="unloaded"
+      />
+      <img
+        id="monster"
+        style="height: 200px;display:none"
+        src="https://static.vecteezy.com/system/resources/previews/037/332/393/non_2x/cartoon-monster-with-big-teeth-and-horns-on-transparent-background-free-png.png"
+        alt="unloaded"
+      />
+    </div>
+
+    <script>
+      var ctx = gameCanvas.getContext("2d");
+      var x = 300;
+      var y = 50;
+      var monsterX = 300;
+      var changeX = 0;
+      var score = 0;
+      //
+      //
+      var gametimer = setInterval(mainloop, 20);
+      //
+      function mainloop() {
+        ctx.clearRect(0, 0, 640, 480);
+        ctx.font = "30px Arial";
+        // ctx.fillText("score " + score, 20, 40);
+        ctx.fillText(`score: ${score}`, 20, 40);
+        ctx.drawImage(apple, x, y, 80, 80);
+        y += 3;
+        if (y > 480) {
+          y -= 80;
+          x = Math.random() * 600;
+        }
+        ctx.drawImage(monster, monsterX, 400, 80, 80);
+        monsterX += changeX;
+        if (monsterX > 560) {
+          monsterX = 560;
+        } else if (monsterX < 0) {
+          monsterX = 0;
+        }
+        checkForHits();
+      }
+      //
+      document.onkeydown = keyPressed;
+      function keyPressed(event) {
+        var k = event.keyCode;
+        if (k == 37) changeX = -2;
+        if (k == 39) changeX = 2;
+      }
+
+      //
+      function checkForHits() {
+        if (Math.abs(400 - y) < 60 && Math.abs(monsterX - x) < 60) {
+          score += 1;
+          y = -80;
+          x = Math.random() * 600;
+        }
+      }
+      //
+      setTimeout(gameover, 30000);
+      function gameover(){
+        clearInterval(gametimer);
+        ctx.font="80px Arial";
+        ctx.fillText("gameover", 100,250);
+
+
+
+
+      }
+    </script>
+  </body>
+</html>

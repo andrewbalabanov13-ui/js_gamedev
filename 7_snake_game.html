@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>snake game</title>
+
+    <style>
+
+    </style>
+
+</head>
+
+<body>
+    <audio id="endM4a" src="Media/7_snake_game/losetrumpet.wav"></audio>
+    <audio id="turnM4a" src="Media/7_snake_game/Untitled video - Made with Clipchamp.m4a"></audio>
+    <div style="background-color:blue;height: 480px; Width: 640px;">
+        <canvas id="gameCanvas" width="640" height="480"></canvas>
+    </div>
+
+    <script>
+        var ctx = gameCanvas.getContext("2d")
+        var X = 240;
+        var Y = 180;
+        var dir = 90;
+        var lastDir = dir;
+        var score = 0;
+
+
+
+
+        drawBackround();
+
+        function drawBackround() {
+            ctx.strokeStyle = "orange";
+            ctx.lineWidth = 40;
+            ctx.strokeRect(0, 0, 640, 480);
+
+        }
+
+        var gameTimer = setInterval(mainLoop, 50);
+
+        function mainLoop() {
+            ctx.fillStyle = "orange";
+            ctx.fillRect(X, Y, 9, 9);
+            if (dir == 90) { X += 10 };
+            if (dir == 180) { Y += 10 };
+            if (dir == -90) { X -= 10 };
+            if (dir == 0) { Y -= 10 };
+            lastDir = dir;
+            checkPixelColor();
+
+            score++;
+            ctx.fillStyle="orange";
+            ctx.fillRect(0, 0, 100, 20);
+            ctx.fillStyle = "black";
+            ctx.font = "20px timesNewRoman";
+            ctx.fillText("score: " + score, 2, 16);
+
+        }
+
+        function checkPixelColor() {
+            var col = ctx.getImageData(X, Y, 1, 1).data;
+            if (col[3] != 0) {
+                endM4a.play();
+                clearInterval(gameTimer);
+                ctx.fillStyle = "cyan"
+                ctx.font = "60px timesNewRoman";
+                ctx.fillText("gameover, score: " + score, 100, 250);
+            }
+
+        }
+
+        document.onkeydown = handleKey;
+        function handleKey(e) {
+            turnM4a.currentTime = 0
+            var key = e.key;
+
+            if (key == 'ArrowUp' && lastDir != 180) {
+                dir = 0; turnM4a.play();
+            } // ArrowUp
+            else if (key == 'ArrowRight' && lastDir != -90) {
+                dir = 90; turnM4a.play();
+            } // ArrowRight
+            else if (key == 'ArrowDown' && lastDir != 0) {
+                dir = 180; turnM4a.play();
+            } // ArrowDown
+            else if (key == 'ArrowLeft' && lastDir != 90) {
+                dir = -90; turnM4a.play();
+            } // ArrowLeft
+        }
+
+    </script>
+
+</body>
+
+</html>

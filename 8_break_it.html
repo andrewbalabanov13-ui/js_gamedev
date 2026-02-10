@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>break It</title>
+        <style>
+            div{
+                background-color:#333333;
+                width:640px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <audio id="wallBreak" src="Media/8_break_it/Untitled video - Made with Clipchamp.m4a"></audio> 
+        <div><canvas id="gameCanvas" width="640" height="480"></canvas></div>
+        <script>
+            var contex = gameCanvas.getContext('2d');
+            var X = 280;
+            var Y = 400;
+            var speedX = 0;
+            var speedY = -8;
+            var batX = 280;
+            var score = 0;
+
+            drawBricks();
+            function drawBricks(){
+                for (a=0;a<5;a++){
+                    for (b=0;b<8;b++){
+                        contex.fillStyle='#ff00'+(40+a*40).toString(16);9
+                        contex.fillRect(b*80,100+a*20,79,19);
+                        
+                    }
+                
+                }
+
+            }
+
+            var gameTimer = setInterval(mainLoop,25);
+            function mainLoop(){
+                contex.clearRect(X, Y, 7,7);
+                X += speedX;
+                Y += speedY;
+
+                checkForHits();
+
+                contex.fillStyle = '#ffffff';
+                contex.fillRect(X,Y,7,7);
+
+                if (X > 620||X < 0){speedX = -speedX;}
+                if (Y < 28){speedY = 8;}
+                if (Y > 480){gameOver();}
+                contex.clearRect(0,460,640,20);
+                contex.fillStyle = '#cccccc';
+                contex.fillRect(batX - 60,460,120,120);
+            }
+
+            function checkForHits(){
+                var col = contex.getImageData(X,Y,1,1).data
+                if ( Y>460 && Math.abs(batX-X) < 60){
+                    speedY = -8;
+                    speedX = Math.round(0.15*(X-batX));
+                }
+                else if (col[3] != 0){
+                    // wallBreak.currentTime = 0;
+                    // wallBreak.play();
+                    var X0 = 80*Math.floor(X / 80);
+                    var Y0 = 20*Math.floor(Y / 20);
+                    contex.clearRect(X0,Y0,79,19);
+                    speedY = -speedY;
+                    score += 1;
+                    contex.fillRect(0,0,640,20);
+                    contex.fillStyle = "black";
+                    contex.font = "20px arial";
+                    contex.fillText('score: ' + score,2,16);
+                    
+                }
+            }
+
+            document.onmousemove = function (){
+                batX = event.clientX;
+            }
+
+            function gameOver(){
+                clearInterval(gameTimer);
+                    contex.fillStyle = "black";
+                    contex.font = "70px arial";
+                    contex.fillText('game over, score: ' + score,5,250);
+
+            }
+        </script>
+    </body>
+</html>

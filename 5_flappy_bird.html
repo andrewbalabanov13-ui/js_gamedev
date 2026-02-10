@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Flappy bird</title>
+    <style>
+        #gameCanvas {
+            width: 640px;
+            height: 480px;
+            background: url("https://wallpapers.com/images/hd/flappy-bird-background-gecj5m4a9yhhjp87.jpg");
+        }
+
+        img {
+            display: none;
+
+
+
+
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div><canvas id="gameCanvas" width="640" height="480"></canvas></div>
+    <img id="bird"
+        src="https://i.redd.it/i-mixed-the-classic-angry-birds-sprites-with-those-from-v0-8jk4n5sr0wyc1.png?width=1280&format=png&auto=webp&s=e4e3ca63304c68073e07a912d0b0e45324d0f7c1"
+        alt="ImageNotLoaded">
+    <img id="pipe" src="https://retdojo.github.io/img/LI_3_img_pipeline.png" alt="ImageNotLoaded">
+    <script>
+        var ctx = gameCanvas.getContext("2d");
+
+        var X = 640, Y = -160, birdY = 220, ySpeed = 0, score = 0;
+
+        function mainloop() {
+            ctx.clearRect(0, 0, 640, 480);
+            ctx.drawImage(pipe,X,Y,250,800);
+            X += -2;
+            
+            // check for hits
+            hitCheck();
+            if (X < -80){
+                X = 640;
+                Y = Math.random() * -320;
+                score++;
+
+            }
+            ctx.drawImage(bird,10,birdY,80,80);
+            ctx.font = "30px Arial";
+            ctx.fillText("score: " + score, 10,30);
+            ySpeed += 0.02;
+            birdY += ySpeed;
+
+        }
+        function hitCheck(){
+            console.log(birdY - Y)
+            console.log(birdY)
+            console.log(X)
+            if (X < 30){ 
+            if ((birdY - Y < 270) || (birdY - Y > 450)){
+                clearInterval(timer);
+                ctx.font = "40px Arial";
+                ctx.fillText("game over, score: " + score,100,250);
+
+            }
+        }
+
+
+        }
+document.onkeydown = function(){
+    ySpeed = -2;
+
+
+}
+timer = setInterval(mainloop,10);
+    </script>
+</body>
+
+
+</html>
