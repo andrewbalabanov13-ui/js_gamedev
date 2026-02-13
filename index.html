@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ballon Pop</title>
+    <style>
+      #ballon {
+        position: absolute;
+        -webkit-animation: all 0.2s;
+        height: 200px;
+      }
+      #background_image {
+        width: 100%;
+        height: 100%;
+      }
+      #scoreBox {
+        color: mediumslateblue;
+        font-family: cursive;
+        font-size: 30px;
+        margin: 5 0px;
+      }
+
+      body,
+      html {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        /* background-image: url('https://as2.ftcdn.net/v2/jpg/02/97/97/15/1000_F_297971508_jlUu6DFHrNp0s6D0ydQzZI14Oq01H4pq.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position:center; */
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1 id="scoreBox">No score has been scored!</h1>
+    <img
+      id="background_image"
+      src="https://as2.ftcdn.net/v2/jpg/02/97/97/15/1000_F_297971508_jlUu6DFHrNp0s6D0ydQzZI14Oq01H4pq.jpg"
+    />
+    <img
+      id="ballon"
+      src="https://gallery.yopriceville.com/var/resizes/Free-Clipart-Pictures/Balloons-PNG/Red_Balloon_Transparent_Clipart.png?m=1629829954"
+    />
+    <script>
+      ballon.addEventListener("click", clicked);
+      setInterval(move, 1000);
+      var score = 0;
+      var count = 0;
+
+      function clicked() {
+        score += 1;
+        scoreBox.innerHTML = "score: " + score;
+      }
+
+      function move() {
+        ballon.style.height = "200px";
+        ballon.style.left = Math.random() * 800 + "px";
+        ballon.style.top = Math.random() * 600 + "px";
+      }
+    </script>
+  </body>
+</html>
