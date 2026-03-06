@@ -122,6 +122,14 @@
     .demo:hover {
       opacity: 1;
     }
+
+    .gameframe{
+      width:90%;
+      height:80vh;
+      display: block;
+   overflow:auto;
+   
+    }
   </style>
 </head>
 
@@ -182,7 +190,7 @@
         <img class="demo cursor" src="https://www.w3schools.com/howto/img_snow_wide.jpg" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
       </div>
       <div class="column">
-        <img class="demo cursor" src="https://www.w3schools.com/howto/img_woods.jpg" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">
+        <img class="demo cursor" src="https://www.w3schools.com/howto/img_snow_wide.jpg" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">
       </div>
       <div class="column">
         <img class="demo cursor" src="https://www.w3schools.com/howto/img_snow_wide.jpg" style="width:100%" onclick="currentSlide(3)"
@@ -200,7 +208,16 @@
         <img class="demo cursor" src="https://www.w3schools.com/howto/img_snow_wide.jpg" style="width:100%" onclick="currentSlide(6)" alt="Snowy Mountains">
       </div>
     </div>
+
+
+    <!-- Create a did  add an i frame to that div-->
+  <div>
+    <iframe class="gameframe"  src="../games/5_flappy_bird.html"  width="90%" height="60%" style="margin-left: 5%;" title="Iframe Example"></iframe>
+  </div>     
+
+
   </div>
+
 
 
   <script>
