@@ -8,13 +8,14 @@
 </head>
 
 <body>
-    <audio src="Media/dog_n_donuts/coin.flac" id="coin"></audio>
+    <audio src="..//Media/4_dog_n_donuts/coin.flac" id="coin"></audio>
     <div style="background-color: gold; width: 640px; ">
         <canvas id="gameCanvas" width="640" height="480"></canvas>
     </div>
     <div style="display: none;">
-        <img id="fish" src="Media/dog_n_donuts/fishpact.png" alt="unloaded">
-        <img id="donut" src="Media/dog_n_donuts/dessertprev.png" alt="unloaded">
+        <!-- <img id="fish" src="Media/dog_n_donuts/fishpact.png" alt="unloaded"> -->
+         <img id="fish" src="..//Media/4_dog_n_donuts/fishpact.png" alt="unloaded">
+        <img id="donut" src="..//Media/4_dog_n_donuts/dessertprev.png" alt="unloaded">
 
     </div>
     <script>
@@ -87,7 +88,7 @@
 
         function drawsprite(spriteSheet,row, col, destX, destY, spriteWidth, spriteHeight, canvasWidth, canvasHeight) {
             if (!spriteSheet.complete) {
-                spriteSheet.onload = () => drawsprite(row, col, destX, desY, spriteWidth, spriteHeight, canvasWidth, canvasHeight);
+                spriteSheet.onload = () => drawsprite(row, col, destX, destY, spriteWidth, spriteHeight, canvasWidth, canvasHeight);
                 return;
             }
             const sx = col * spriteWidth;

@@ -26,11 +26,12 @@
         <canvas id="gameCanvas" width="640px" height="480px">
         </canvas>
     </div>
-    <img id="rocketShip"
-        src="https://static.vecteezy.com/system/resources/thumbnails/019/045/384/small/rocket-icon-simple-start-up-sign-and-symbol-png.png"
-        alt="ImageNotLoaded">
-    <img id="meteor" src="Media/6_meteor/meteorBrown_med3-removebg-preview.png">
-
+    <div style="display:none;">
+        <img id="rocketShip"
+            src="https://static.vecteezy.com/system/resources/thumbnails/019/045/384/small/rocket-icon-simple-start-up-sign-and-symbol-png.png"
+            alt="ImageNotLoaded">
+        <img id="meteor" src="..//Media/6_meteor/meteorBrown_med3-removebg-preview.png">
+    </div>
     <script>
         var ctx = gameCanvas.getContext("2d");
         var X = [600, 600, 600, 600, 600];
@@ -62,16 +63,16 @@
             }
 
         }
-        function rotateImage(image, amount_rotated,tx,ty,dx,dy,width,height){
+        function rotateImage(image, amount_rotated, tx, ty, dx, dy, width, height) {
             ctx.save()
-            ctx.translate(tx,ty);
+            ctx.translate(tx, ty);
             ctx.rotate(amount_rotated);
-            ctx.drawImage(image, dx,dy, width, height);
+            ctx.drawImage(image, dx, dy, width, height);
             ctx.restore()
-                }
-                
-            function moveRocket() {
-            rotateImage(rocketShip,Math.PI / 2,40,rocketY + 40,-40,-40,80,80)
+        }
+
+        function moveRocket() {
+            rotateImage(rocketShip, Math.PI / 2, 40, rocketY + 40, -40, -40, 80, 80)
             rocketY += changeY;
             score++;
             ctx.fillStyle = "yellow";
@@ -87,7 +88,7 @@
             if ((Math.abs(X[n]) < 50) && (Math.abs(rocketY - Y[n]) < 50)) {
                 clearInterval(gameTimer);
                 ctx.font = "50px Arial";
-                ctx.fillText("Game Over, score: " + score, 100,250);
+                ctx.fillText("Game Over, score: " + score, 100, 250);
 
 
 
